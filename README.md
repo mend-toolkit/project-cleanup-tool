@@ -253,23 +253,16 @@ The following Mend project reports are available through the clean-up tool. Thes
 * **vulnerability** - Vulnerability report (API 1.4, Excel)
 
 ### SAST Reports (API 3.0)
-* **sast_findings** - SAST code findings report (Excel)
-* **sast_suppressions** - SAST suppressions report (Excel)
-* **sast_compliance** - SAST compliance report (Excel)
+* **sast_findings** - SAST code findings report (CSV)
+* **sast_suppressions** - SAST suppressions report (CSV)
 
 ### Container Reports (API 3.0)
-* **container_due_diligence** - Container due diligence report (Excel)
-* **container_attribution** - Container attribution report (HTML)
+* **container_due_diligence** - Container due diligence report (JSON)
+* **container_attribution** - Container attribution report (JSON)
 * **container_sbom** - Container SBOM in SPDX 2.3 format (JSON)
 
 **Note**: The tool automatically checks for data availability before generating reports. If a project has no SCA libraries, SAST findings, or Container image packages, the corresponding reports will be skipped.
 
-## Additional Notes
-
-### API Version Details
-* **API 3.0**: Used for retrieving applications and projects with cursor-based pagination, UUID identification, native label support, and tag support. Also used for generating SCA, SAST, and Container reports asynchronously.
-* **API 2.0**: Used for authentication (JWT tokens that expire every 30 minutes and are automatically refreshed) and project deletion.
-* **API 1.4**: Used as a fallback for specific report types not available in newer APIs (e.g., attribution, inventory, and legacy Excel reports). Also used for retrieving project tags.
 
 ### SAST Standalone Clean up
 If you need to run a cleanup script specifically for your SAST environment (not integrated with SCA), please refer to the Mend SAST cleanup kit in the [Mend Toolkit](https://github.com/mend-toolkit/mend-examples/tree/main/Scripts/Mend%20SAST).
