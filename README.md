@@ -263,10 +263,6 @@ The following Mend project reports are available through the clean-up tool. Thes
 
 **Note**: The tool automatically checks for data availability before generating reports. If a project has no SCA libraries, SAST findings, or Container image packages, the corresponding reports will be skipped.
 
-
-### SAST Standalone Clean up
-If you need to run a cleanup script specifically for your SAST environment (not integrated with SCA), please refer to the Mend SAST cleanup kit in the [Mend Toolkit](https://github.com/mend-toolkit/mend-examples/tree/main/Scripts/Mend%20SAST).
-
 **Note**: The optimal cleanup scope is derived from the size of the environment, Mend scope size (memory and CPU) allocated for the server, and runtime time constraints.    
 
 
