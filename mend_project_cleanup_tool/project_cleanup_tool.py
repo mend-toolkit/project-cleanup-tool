@@ -359,7 +359,7 @@ def authenticate():
         proxy = {"https": CONFIG.proxy, "http": CONFIG.proxy} if CONFIG.proxy else {}
         with warnings.catch_warnings(record=True):
             warnings.simplefilter("always", InsecureRequestWarning)
-            url = f"https://{'api-' if 'saas' in CONFIG.mend_url else ''}{CONFIG.mend_url}{API_VER}/login"
+            url = f"https://api-{CONFIG.mend_url}{API_VER}/login"
             response = requests.post(
                 url=url,
                 json=login_data,
