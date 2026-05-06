@@ -1293,7 +1293,11 @@ def get_all_projects_once():
         project_uuid = project.get('uuid', '')
         
         last_scan_time_ms = project.get('statistics', {}).get('LAST_SCAN', {}).get('lastScanTime')
-        
+
+        if not last_scan_time_ms and CONFIG.skip_never_scanned_projects:
+            print(f"Skipping project '{project.get('name', 'Unknown')}' - no scan data found")
+            continue
+
         try:
             dt = datetime.fromtimestamp(last_scan_time_ms / 1000, tz=timezone.utc)
             formatted_date = dt.strftime('%Y-%m-%d %H:%M:%S %z')
@@ -1367,6 +1371,7 @@ def parse_args():
     parser.add_argument('-y', '--dryRun', help="Dry run mode - preview changes without executing", dest='dry_run', type=strtobool, default=False)
     parser.add_argument('-j', '--skipProjectDeletion', help="Skip project deletion", dest='skip_project_deletion', type=strtobool, default=False)
     parser.add_argument('-ss', '--skipSummary', help="Skip summary of deleted projects", dest='skip_summary', type=strtobool, default=False)
+    parser.add_argument('-sn', '--skipNeverScannedProjects', help="Skip projects that have never been scanned (no last scan date)", dest='skip_never_scanned_projects', type=strtobool, default=False)
     parser.add_argument('-o', '--outputDir', help="Output directory", dest='output_dir', default=os.getcwd() + "/Mend/Reports/")
     parser.add_argument('-p', '--projectParallelismLevel', help="Maximum number of parallel threads", dest='project_parallelism_level', type=int, default=5)
     parser.add_argument('-pr', '--proxy', help="Proxy URL", dest='proxy', default="")
@@ -1409,7 +1414,8 @@ def parse_config_file(filepath):
                     skip_report_generation=config['DEFAULT'].getboolean("SkipReportGeneration", False),
                     skip_project_deletion=config['DEFAULT'].getboolean("SkipProjectDeletion", False),
                     proxy=get_config_file_value(config['DEFAULT'].get("ProxyUrl"),""),
-                    skip_summary=get_config_file_value(config['DEFAULT'].getboolean("SkipSummary"),False)
+                    skip_summary=get_config_file_value(config['DEFAULT'].getboolean("SkipSummary"),False),
+                    skip_never_scanned_projects=config['DEFAULT'].getboolean("SkipNeverScannedProjects", False)
                 )
     else:
         print(f"No configuration file found at: {filepath}")
