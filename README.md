@@ -62,88 +62,88 @@
 
 ## Examples:
 Perform dry run check to preview which projects would be deleted:  
-`mend_project_cleanup_tool -r 30 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> -y true`
+`mend_project_cleanup_tool -r 30 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> -y true`
 
 ---
 
 Keep the last 60 days in each application, excluding specific application UUIDs:  
-`mend_project_cleanup_tool -r 60 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> --excludedApplicationUuids <APP_UUID_1>,<APP_UUID_2>`
+`mend_project_cleanup_tool -r 60 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> --excludedApplicationUuids <APP_UUID_1>,<APP_UUID_2>`
 
 ---
 
 Keep only two of the newest projects in specific applications:  
-`mend_project_cleanup_tool -r 2 -m FilterProjectsByLastCreatedCopies -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> --includedApplicationUuids <APP_UUID_1>,<APP_UUID_2>`
+`mend_project_cleanup_tool -r 2 -m FilterProjectsByLastCreatedCopies -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> --includedApplicationUuids <APP_UUID_1>,<APP_UUID_2>`
 
 ---
 
 Analyze only projects with specific Mend tag and keep the newest project in each application:  
-`mend_project_cleanup_tool -r 1 -m FilterProjectsByLastCreatedCopies -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> --includedProjectTag <KEY>:<VALUE>`
+`mend_project_cleanup_tool -r 1 -m FilterProjectsByLastCreatedCopies -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> --includedProjectTag <KEY>:<VALUE>`
 
 ---
 
 Keep the last 2 weeks and analyze only projects whose tag value matches a regex pattern:  
-`mend_project_cleanup_tool -r 14 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> --includedProjectTagRegexInValue <KEY>:<REGEX_PATTERN>`
+`mend_project_cleanup_tool -r 14 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> --includedProjectTagRegexInValue <KEY>:<REGEX_PATTERN>`
 
 ---
 
 Delete projects with last scan before a specific date (e.g., January 15, 2025):  
-`mend_project_cleanup_tool -m FilterProjectsByLastScanDate -d 01152025 -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL>`
+`mend_project_cleanup_tool -m FilterProjectsByLastScanDate -d 01152025 -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL>`
 
 ---
 
 Keep the last 100 days, but exclude specific projects by UUID:  
-`mend_project_cleanup_tool -r 100 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> --excludedProjectUuids <PROJECT_UUID_1>,<PROJECT_UUID_2>`
+`mend_project_cleanup_tool -r 100 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> --excludedProjectUuids <PROJECT_UUID_1>,<PROJECT_UUID_2>`
 
 ---
 
 Keep the last month but exclude projects with specific name patterns:  
-`mend_project_cleanup_tool -r 31 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> --excludedProjectNamePatterns CI_,-test`
+`mend_project_cleanup_tool -r 31 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> --excludedProjectNamePatterns CI_,-test`
 
 ---
 
 Filter by application labels (keep only applications with specific labels):  
-`mend_project_cleanup_tool -r 30 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> --includedApplicationLabels production,staging`
+`mend_project_cleanup_tool -r 30 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> --includedApplicationLabels production,staging`
 
 ---
 
 Filter by project labels (exclude projects with specific labels):  
-`mend_project_cleanup_tool -r 30 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> --excludedProjectLabels deprecated,archived`
+`mend_project_cleanup_tool -r 30 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> --excludedProjectLabels deprecated,archived`
 
 ---
 
 Filter by application tags (keep only applications with specific tag):  
-`mend_project_cleanup_tool -r 30 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> --includedApplicationTag environment:production`
+`mend_project_cleanup_tool -r 30 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> --includedApplicationTag environment:production`
 
 ---
 
 Filter by application tag regex (exclude applications with tag matching pattern):  
-`mend_project_cleanup_tool -r 30 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> --excludedApplicationTagRegexInValue team:.*test.*`
+`mend_project_cleanup_tool -r 30 -m FilterProjectsByUpdateTime -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> --excludedApplicationTagRegexInValue team:.*test.*`
 
 ---
 
 ## Removing >5k Projects
 If attempting to delete a large number of projects, the following configuration is recommended: 
 
-`mend_project_cleanup_tool -r 5 -m FilterProjectsByLastCreatedCopies -u <USER_KEY> -k <ORG_UUID> -e <MEND_EMAIL> -ss true -s true` 
+`mend_project_cleanup_tool -r 5 -m FilterProjectsByLastCreatedCopies -u <USER_KEY> -k <ORG_UUID> -em <MEND_EMAIL> -ss true -s true` 
 
 This configuration will keep the last 5 projects in any given application, skip report generation, and skip the summary at the end of script execution. If you wish to generate reports, it is recommended to do so for 1 application at a time using the `--includedApplicationUuids` parameter.
 
 ## Full Usage flags:
 ```shell
-usage: mend_project_cleanup_tool [-h] -u MEND_USER_KEY -k ORGANIZATION_UUID -e MEND_EMAIL [-a MEND_URL] 
+usage: mend_project_cleanup_tool [-h] -u MEND_USER_KEY -k ORGANIZATION_UUID -em MEND_EMAIL [-a MEND_URL] 
                     [-m {FilterProjectsByUpdateTime,FilterProjectsByLastCreatedCopies,FilterProjectsByLastScanDate}] 
                     [-r DAYS_TO_KEEP] [-d LAST_SCAN_DATE]
-                    [--includedApplicationUuids] [--excludedApplicationUuids] 
+                    [-i INCLUDED_APPLICATION_UUIDS] [-e EXCLUDED_APPLICATION_UUIDS] 
                     [--includedApplicationLabels] [--excludedApplicationLabels]
                     [--includedApplicationTag] [--includedApplicationTagRegexInValue]
                     [--excludedApplicationTag] [--excludedApplicationTagRegexInValue]
-                    [--excludedProjectUuids] [--excludedProjectNamePatterns] 
-                    [--includedProjectLabels] [--excludedProjectLabels]
-                    [--includedProjectTag] [--includedProjectTagRegexInValue] 
+                    [-x EXCLUDED_PROJECT_UUIDS] [-n EXCLUDED_PROJECT_NAME_PATTERNS] 
+                    [--includedProjectLabels] [-l EXCLUDED_PROJECT_LABELS]
+                    [-g INCLUDED_PROJECT_TAG] [-v INCLUDED_PROJECT_TAG_REGEX_IN_VALUE] 
                     [--excludedProjectTag] [--excludedProjectTagRegexInValue]
                     [-t REPORT_TYPES] [-o OUTPUT_DIR] [-p PROJECT_PARALLELISM_LEVEL] 
                     [-y DRY_RUN] [-s SKIP_REPORT_GENERATION] [-j SKIP_PROJECT_DELETION] [-ss SKIP_SUMMARY]
-                    [-pr PROXY_URL]
+                    [-sn SKIP_NEVER_SCANNED_PROJECTS] [-pr PROXY_URL]
 
 Mend Cleanup Tool
 
@@ -152,12 +152,12 @@ Required arguments:
                     Mend User Key
   -k ORGANIZATION_UUID, --organizationUuid
                     Mend Organization UUID (from API 3.0)
-  -e MEND_EMAIL, --mendEmail
+  -em MEND_EMAIL, --email
                     Mend Email (required for API 2.0 JWT authentication)
 
 Optional arguments:
   -h, --help            Show this help message and exit
-  -a MEND_URL, --mendUrl
+  -a MEND_URL, --mendURL
                     Mend URL. Defaults to saas.mend.io
   -m OPERATION_MODE, --operationMode {FilterProjectsByUpdateTime,FilterProjectsByLastCreatedCopies,FilterProjectsByLastScanDate}
                     Cleanup operation mode (default: FilterProjectsByUpdateTime)
@@ -170,9 +170,9 @@ Optional arguments:
                     Projects with last scan before this date will be deleted
 
 Application Filtering:
-  --includedApplicationUuids
+  -i INCLUDED_APPLICATION_UUIDS, --includedApplicationUuids
                     Comma-separated list of application UUIDs to include (only these will be processed)
-  --excludedApplicationUuids
+  -e EXCLUDED_APPLICATION_UUIDS, --excludedApplicationUuids
                     Comma-separated list of application UUIDs to exclude
   --includedApplicationLabels
                     Comma-separated list of labels - only applications with at least one of these labels will be processed
@@ -188,17 +188,17 @@ Application Filtering:
                     Exclude applications where tag value matches regex (format: key:regex_pattern, case sensitive)
 
 Project Filtering:
-  --excludedProjectUuids
+  -x EXCLUDED_PROJECT_UUIDS, --excludedProjectUuids
                     Comma-separated list of project UUIDs to exclude from deletion
-  --excludedProjectNamePatterns
+  -n EXCLUDED_PROJECT_NAME_PATTERNS, --excludedProjectNamePatterns
                     Comma-separated list of name patterns to exclude (case sensitive)
   --includedProjectLabels
                     Comma-separated list of labels - only projects with at least one of these labels will be processed
-  --excludedProjectLabels
+  -l EXCLUDED_PROJECT_LABELS, --labels
                     Comma-separated list of labels - projects with any of these labels will be excluded
-  --includedProjectTag
+  -g INCLUDED_PROJECT_TAG, --includedProjectTag
                     Include only projects with specific tag (format: key:value, case sensitive)
-  --includedProjectTagRegexInValue
+  -v INCLUDED_PROJECT_TAG_REGEX, --includedProjectTagRegexInValue
                     Include only projects where tag value matches regex (format: key:regex_pattern, case sensitive)
   --excludedProjectTag
                     Exclude projects with specific tag (format: key:value, case sensitive)
@@ -224,6 +224,10 @@ Execution Options:
   -ss SKIP_SUMMARY, --skipSummary
                     Skip the summary of deleted projects at the end
                     Recommended when processing a large number of projects (default: False)
+  -sn SKIP_NEVER_SCANNED_PROJECTS, --skipNeverScannedProjects
+                    Skip projects that have never been scanned (no last scan date)
+                    Without this flag, never-scanned projects default to epoch (1970-01-01) and are always
+                    marked for deletion regardless of the -r value (default: False)
   -pr PROXY_URL, --proxy
                     Proxy URL format: <proxy_ip>:<proxy_port>
                     For Basic Auth: <username>:<password>@<proxy_ip>:<proxy_port>
