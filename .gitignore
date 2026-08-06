@@ -21,6 +21,7 @@ Mend/Reports/
 # Excluded Files - Naming Convention
 local-env.*
 local-params.config
+mend_project_cleanup_tool/params.config
 /venv/
 /ws-projects-cleanup/conf/
 /ws_cleanup_tool/cleanup.log
